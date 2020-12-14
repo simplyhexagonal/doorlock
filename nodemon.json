@@ -1,0 +1,5 @@
+{
+  "watch": ["dist", "runkit.ts"],
+  "ext": "js,json",
+  "exec": "ts-node runkit.ts"
+}
