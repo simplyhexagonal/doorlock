@@ -1,5 +1,5 @@
 {
-  "watch": ["dist", "runkit.ts"],
-  "ext": "js,json",
-  "exec": "ts-node runkit.ts"
+  "watch": ["dist", "specs"],
+  "ext": "js,json,ts",
+  "exec": "ts-node ./specs/index.ts"
 }
