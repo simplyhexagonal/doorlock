@@ -7,32 +7,32 @@ The main goal is to make implementing role-based access (with permission overrid
 easy as the following example:
 
 ```js
-  // The following promise will either return true or throw an 'Unauthorized' error
-  doorlock.evaluateAbilities(
-    // a user object (previously fetched by your code) to be evaluated against
-    // roles, permissions, and restrictions (a.k.a. "abilities")
-    user,
-    // options defining the "abilities" the user will be challenged against
-    {
-      // a group of users that share the 'author' role will be allowed access
-      roleHandles: ['author'],
-      // any single user with the 'doc-create' permission will be allowed access
-      // (regardless of whether they have the 'author' role or not)
-      permissionHandles: ['doc-create'],
-      // any single user with the 'deny-doc-create' restriction will be blocked and bounced-back
-      // (even if they have the 'author' role or the 'doc-create' permission)
-      restrictionHandles: ['deny-doc-create'],
-    },
-  ).then(
-    () => {
-      next();
-    }
-  ).catch(
-    (err) => {
-      res.status(500);
-      res.render('error', { error: err });
-    }
-  );
+// The following promise will either return true or throw an 'Unauthorized' error
+doorlock.evaluateAbilities(
+  // a user object (previously fetched by your code) to be evaluated against
+  // roles, permissions, and restrictions (a.k.a. "abilities")
+  user,
+  // options defining the "abilities" the user will be challenged against
+  {
+    // a group of users that share the 'author' role will be allowed access
+    roleHandles: ['author'],
+    // any single user with the 'doc-create' permission will be allowed access
+    // (regardless of whether they have the 'author' role or not)
+    permissionHandles: ['doc-create'],
+    // any single user with the 'deny-doc-create' restriction will be blocked and bounced-back
+    // (even if they have the 'author' role or the 'doc-create' permission)
+    restrictionHandles: ['deny-doc-create'],
+  },
+).then(
+  () => {
+    next();
+  }
+).catch(
+  (err) => {
+    res.status(500);
+    res.render('error', { error: err });
+  }
+);
 ```
 
 ## Like this project? ❤️
@@ -48,7 +48,7 @@ Please consider:
 In order to better understand how to properly use DoorLock, its good to understand
 the basic entity definitions and assumptions driving the logic.
 
-Firstly these were the entity definitions that define the access hierarchy:
+Firstly, these are the basic entity definitions that detail access hierarchy:
 
 - Permissions allow functionality to run
 - Restrictions block functionality from running
@@ -121,6 +121,7 @@ source code you will see that much of the code is reutilized amongst DoorLock en
 permissions, roles, and users).
 
 Experience dictates that the logic behind groups and organizations will vary widely between projects.
+
 For example, just wonder if you will want a group comprised of users from two or more organizations,
 a cross-organizational group if you may. That right there would be a text-book example of the [law of diminishing returns](https://en.wikipedia.org/wiki/Diminishing_returns),
 where the effort to implement said use-case would be disproportionately higher to the benefit provided
