@@ -1,7 +1,7 @@
 {
   "name": "doorlock",
   "version": "0.9.1",
-  "description": "Simple Typescript boilerplate for writing modules",
+  "description": "Allow or deny access based on a hierarchy of restrictions, permissions, roles, and users",
   "main": "dist/index.js",
   "typings": "typings",
   "author": "Jean M. Lescure",
