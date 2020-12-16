@@ -254,7 +254,7 @@ directory on this repository.
 - If a user that's supposed to be given access keeps being blocked, there may be an error produced by
 missing data or properties that is being suppressed by the `catch` logic. In these cases simply try and
 refactor the catch logic to log the error (i.e. `.catch((e) => console.log(e))`) to get more details
-to debug with, although it would be advisable that you refactor the catch clause to verify the error
+to debug with. Although it would be advisable that you refactor the catch clause to verify the error
 and alert you of any error other than `Unauthorized`.
 
 ## Development and build scripts
