@@ -1,4 +1,8 @@
+![DoorLock.js logo featuring a door lock with a fingerprint and abstract blueish shapes](https://assets.jeanlescure.io/doorlock-js-logo.svg)
+
 # DoorLock.js
+
+[![try on runkit](https://badge.runkitcdn.com/doorlock.svg)](https://npm.runkit.com/doorlock)
 
 A zero-dependency package to do the heavy-lifting (in back-end APIs) of allowing or denying access
 based on a hierarchy of restrictions, permissions, roles, and users.
@@ -29,11 +33,13 @@ doorlock.evaluateAbilities(
   }
 ).catch(
   (err) => {
-    res.status(500);
+    res.status(401);
     res.render('error', { error: err });
   }
 );
 ```
+
+([Click here to see an example on RunKit](https://npm.runkit.com/doorlock) that you can try out right now!)
 
 ## Like this project? ❤️
 
@@ -134,9 +140,101 @@ DoorLock ready to throw as the cherry on top of your API cake 😉
 
 ## How to get started using this package
 
+Import DoorLock as you would any other package:
+
 ```ts
-// TODO: Document usage
+import DoorLock from 'doorlock';
 ```
+
+DoorLock needs to be able to fetch roles, permissions, and restrictions (i.e. from your app's DB),
+thus anywhere on your code **before** your API's server start, define the following functions:
+
+```ts
+const fetchRolesById = async (roleIds) => /* your custom logic */;
+const fetchPermissionsById = async (permissionIds) => /* your custom logic */;
+const fetchRestrictionsById = async (restrictionIds) => /* your custom logic */;
+const fetchRolesByHandle = async (roleHandles) => /* your custom logic */;
+const fetchPermissionsByHandle = async (permissionHandles) => /* your custom logic */;
+const fetchRestrictionsByHandle = async (restrictionHandles) => /* your custom logic */;
+```
+
+Also before starting the server, and more importantly, before defining any routes you wish to control
+access to, instantiate DoorLock with the following options (which include the aforementione fetch functions):
+
+```ts
+const doorlock = new DoorLock({
+  superAdminId: '...', // must be accessible from the user object as: user.id
+  fetchRolesById,
+  fetchPermissionsById,
+  fetchRestrictionsById,
+  fetchRolesByHandle,
+  fetchPermissionsByHandle,
+  fetchRestrictionsByHandle,
+  // The following are optional
+  verifyRoleExists: true, // defaults to: false
+  verifyAbilitiesExist: true, // defaults to: false
+  debug: true, // defaults to: false
+  logFn: (message: string) => console.log('MY CUSTOM LOG =>', message), // only works if debug: true
+});
+```
+
+Once instantiated you can implement DoorLock on each request, as in the following example:
+
+```ts
+server.post('/doc', (req, res) => {
+  const user = /* i.e. the user object returned after validating the access token on req.headers */;
+
+  doorlock.evaluateAbilities(
+    user,
+    {
+      roleHandles: ['author'], // <== Only allows access to users with the author role
+      permissionHandles: [],
+      restrictionHandles: [],
+    },
+  ).then(() => {
+    res.status(200);
+    res.send(`User ${userId} is allowed to create documents`);
+  }).catch(() => {
+    res.status(401);
+    res.render('error', {error: `User ${userId} is NOT allowed to create documents`});
+  });
+});
+```
+
+Or better yet, creating access specific middlewares:
+
+```ts
+// Middleware that only allows users/roles with the 'doc-manipulation' permission
+const docManipulationAccessControl = (req, res, next) => {
+  const user = /* i.e. the user object returned after validating the access token on req.headers */;
+
+  return doorlock.evaluateAbilities(
+    user,
+    {
+      roleHandles: [],
+      permissionHandles: ['doc-manipulation'],
+      restrictionHandles: [],
+    },
+  ).then(() => {
+    next();
+  }).catch(() => {
+    res.status(401);
+    res.send('Unauthorized');
+  });
+}
+
+// Then the access logic becomes trivial to re-use and maintain
+server.post('/doc', docManipulationAccessControl, (req, res) => { /* ... */ });
+server.get('/doc', docManipulationAccessControl, (req, res) => { /* ... */ });
+server.put('/doc', docManipulationAccessControl, (req, res) => { /* ... */ });
+server.delete('/doc', docManipulationAccessControl, (req, res) => { /* ... */ });
+
+```
+
+If you would like a functioning example, you're welcome to try [this dummy server with DoorLock example on Runkit](https://npm.runkit.com/doorlock);
+
+And if you'd like a more thorough example take a look at the mock and test files under the `specs`
+directory on this repository.
 
 ## Development and build scripts
 
@@ -145,7 +243,7 @@ Typescript code running as quickly and performant as possible.
 
 **Development**
 
-```
+```sh
 yarn dev
 ```
 
@@ -158,7 +256,7 @@ This includes running node with the `--inspect` flag so you can inspect your cod
 
 **Build**
 
-```
+```sh
 yarn build
 ```
 

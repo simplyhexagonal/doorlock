@@ -2,13 +2,28 @@
   "name": "doorlock",
   "version": "0.9.1",
   "description": "Allow or deny access based on a hierarchy of restrictions, permissions, roles, and users",
+  "keywords": [
+    "authorization",
+    "access control",
+    "RBAC",
+    "role based access control",
+    "role management",
+    "user management",
+    "roles",
+    "permission",
+    "auth",
+    "restrict",
+    "authorize"
+  ],
   "main": "dist/index.js",
   "typings": "typings",
   "author": "Jean M. Lescure",
   "license": "Apache-2.0",
+  "runkitExampleFilename": "./runkit.js",
   "scripts": {
     "rm:dist": "rm -rf dist/*",
     "dev": "yarn rm:dist && concurrently \"rollup -cw\" \"sleep 10 && nodemon --inspect\"",
+    "test": "",
     "build": "yarn rm:dist && NODE_ENV=production rollup -c",
     "prepare": "yarn link && yarn link doorlock"
   },
