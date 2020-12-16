@@ -214,7 +214,7 @@ server.post('/doc', (req, res) => {
 });
 ```
 
-Or better yet, creating access specific middlewares:
+Or better yet, create access specific middlewares:
 
 ```ts
 // Middleware that only allows users/roles with the 'doc-manipulation' permission
