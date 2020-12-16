@@ -268,7 +268,7 @@ Typescript code running as quickly and performant as possible.
 yarn dev
 ```
 
-Uses [concurrently]() to run Rollup in watch mode (which means it will transpile to `dist` when you
+Uses [concurrently](https://www.npmjs.com/package/concurrently) to run Rollup in watch mode (which means it will transpile to `dist` when you
 save changes to your code), as well as Nodemon to listen for changes in the `dist` directory and
 re-run the tests in the `specs` directory as you modify the source!
 
