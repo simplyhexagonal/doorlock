@@ -38,6 +38,7 @@ class DoorLock {
   verifyAbilitiesExist: boolean = false;
   debug: boolean = false;
   logFn: DoorLockOptions['logFn'];
+  version: string = process.env.VERSION;
 
   constructor({
     superAdminId,
@@ -78,21 +79,6 @@ class DoorLock {
       logFn: logFn,
     });
   }
-
-  // TODO: Describe abilities
-  // describeAbilities = (abilities: DoorLockAbilities): Promise<DoorLockAbilityDescriptions> => {
-    
-  // };
-
-  // TODO: Describe role abilities
-  // describeRoleAbilities = (role: DoorLockRole): Promise<DoorLockAbilityDescriptions> => {
-  //   return this.describeAbilities(/* */);
-  // };
-
-  // TODO: Describe user abilities
-  // describeUserAbilities = (user: DoorLockUser): Promise<DoorLockAbilityDescriptions> => {
-  //   return this.describeAbilities(/* */);
-  // };
 
   checkSuperAdmin = ({id}: DoorLockUser): boolean => {
     if (this.superAdminId && id === this.superAdminId) {

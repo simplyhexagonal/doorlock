@@ -17,6 +17,7 @@ const plugins = [
     'process.env.NODE_ENV': JSON.stringify(
       isProduction ? 'production' : (process.env.NODE_ENV || 'development')
     ),
+    'process.env.VERSION': JSON.stringify(pkg.version),
   }),
   typescript({
     typescript: require('typescript'),
