@@ -244,7 +244,7 @@ server.delete('/doc', docManipulationAccessControl, (req, res) => { /* ... */ })
 
 ```
 
-If you would like a functioning example, you're welcome to try [this dummy server with DoorLock example on Runkit](https://npm.runkit.com/doorlock);
+If you would like a functioning example, you're welcome to try [this dummy server with DoorLock example on Runkit](https://npm.runkit.com/doorlock).
 
 And if you'd like a more thorough example take a look at the mock and test files under the `specs`
 directory on this repository.
