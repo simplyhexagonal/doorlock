@@ -63,7 +63,7 @@ Please consider:
 In order to better understand how to properly use DoorLock, it's good to understand
 the basic entity definitions and assumptions driving the logic.
 
-Firstly, these are the basic entity definitions that detail access hierarchy:
+Firstly, these are the basic principles that detail access hierarchy:
 
 - Permissions allow functionality to run
 - Restrictions block functionality from running
@@ -137,8 +137,9 @@ permissions, roles, and users).
 
 Experience dictates that the logic behind groups and organizations will vary widely between projects.
 
-For example, just wonder if you will want a group comprised of users from two or more organizations,
-a cross-organizational group if you may. That right there would be a text-book example of the [law of diminishing returns](https://en.wikipedia.org/wiki/Diminishing_returns),
+For example, just wonder if you will need to support the use-case for a group comprised of users from
+two or more organizations, a cross-organizational group if you may. That right there would be a
+text-book example of the [law of diminishing returns](https://en.wikipedia.org/wiki/Diminishing_returns),
 where the effort to implement said use-case would be disproportionately higher to the benefit provided
 to a smaller percentage of the devs using DoorLock.
 
@@ -187,9 +188,9 @@ const doorlock = new DoorLock({
 });
 ```
 
-**NOTE:** The `verifyRoleExists` and `verifyAbilitiesExist` options should be turned on solely to debug
+**NOTE:** _The `verifyRoleExists` and `verifyAbilitiesExist` options should be turned on solely to debug
 errors or inconsistencies that you may suspect to be caused by "ghost" roles or abilities left behind
-after deletion of the original entity (i.e. a user has a role id of a role that was deleted).
+after deletion of the original entity (i.e. a user has a role id of a role that was deleted)._
 
 Once instantiated you can implement DoorLock on each request, as in the following example:
 
@@ -255,7 +256,7 @@ directory on this repository.
 missing data or properties that is being suppressed by the `catch` logic. In these cases simply try and
 refactor the catch logic to log the error (i.e. `.catch((e) => console.log(e))`) to get more details
 to debug with. Although it would be advisable that you refactor the catch clause to verify the error
-and alert you of any error other than `Unauthorized`.
+and alert you of any error **other** than `Unauthorized`.
 
 ## Development and build scripts
 
