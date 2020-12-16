@@ -2,6 +2,10 @@
 
 # DoorLock.js
 
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
+
 ![tests](https://github.com/jeanlescure/doorlock/workflows/tests/badge.svg) [![try on runkit](https://badge.runkitcdn.com/doorlock.svg)](https://npm.runkit.com/doorlock)
 
 A zero-dependency package to do the heavy-lifting (in back-end APIs) of allowing or denying access
@@ -40,6 +44,11 @@ doorlock.evaluateAbilities(
 ```
 
 ([Click here to see an example on RunKit](https://npm.runkit.com/doorlock) that you can try out right now!)
+
+## Before you continue
+
+- If you are also looking to implement login using Google, Facebook, Github, and/or implement your own custom SSO, take a look at [Session SSO](https://github.com/jeanlescure/session-sso)
+- If you'd like to build Typescript packages like this one, check out the [No BS Typescript Boilerplate](https://github.com/jeanlescure/no-bs-typescript-boilerplate)
 
 ## Like this project? ❤️
 
@@ -171,12 +180,16 @@ const doorlock = new DoorLock({
   fetchPermissionsByHandle,
   fetchRestrictionsByHandle,
   // The following are optional
-  verifyRoleExists: true, // defaults to: false
-  verifyAbilitiesExist: true, // defaults to: false
+  verifyRoleExists: true, // defaults to: false (to save on performance)
+  verifyAbilitiesExist: true, // defaults to: false (to save on performance)
   debug: true, // defaults to: false
   logFn: (message: string) => console.log('MY CUSTOM LOG =>', message), // only works if debug: true
 });
 ```
+
+**NOTE:** The `verifyRoleExists` and `verifyAbilitiesExist` options should be turned on solely to debug
+errors or inconsistencies that you may suspect to be caused by "ghost" roles or abilities left behind
+after deletion of the original entity (i.e. a user has a role id of a role that was deleted).
 
 Once instantiated you can implement DoorLock on each request, as in the following example:
 
@@ -236,6 +249,14 @@ If you would like a functioning example, you're welcome to try [this dummy serve
 And if you'd like a more thorough example take a look at the mock and test files under the `specs`
 directory on this repository.
 
+## Troubleshooting
+
+- If a user that's supposed to be given access keeps being blocked, there may be an error produced by
+missing data or properties that is being suppressed by the `catch` logic. In these cases simply try and
+refactor the catch logic to log the error (i.e. `.catch((e) => console.log(e))`) to get more details
+to debug with, although it would be advisable that you refactor the catch clause to verify the error
+and alert you of any error other than `Unauthorized`.
+
 ## Development and build scripts
 
 Rollup was chosen to handle the transpiling, compression, and any other transformations needed to get
@@ -267,3 +288,26 @@ This command will build the `dist/index.js`, uglified and tree-shaken so it load
 Yes, thank you! Projects like this thrive when they are community-driven.
 
 Please update the docs and tests and add your name to the package.json file on any PR you submit.
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://jeanlescure.cr"><img src="https://avatars2.githubusercontent.com/u/3330339?v=4" width="100px;" alt=""/><br /><sub><b>Jean Lescure</b></sub></a><br /><a href="#maintenance-jeanlescure" title="Maintenance">🚧</a> <a href="https://github.com/jeanlescure/doorlock/commits?author=jeanlescure" title="Code">💻</a> <a href="#userTesting-jeanlescure" title="User Testing">📓</a> <a href="https://github.com/jeanlescure/doorlock/commits?author=jeanlescure" title="Tests">⚠️</a> <a href="#example-jeanlescure" title="Examples">💡</a> <a href="https://github.com/jeanlescure/doorlock/commits?author=jeanlescure" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://dianalu.design"><img src="https://avatars2.githubusercontent.com/u/1036995?v=4" width="100px;" alt=""/><br /><sub><b>Diana Lescure</b></sub></a><br /><a href="https://github.com/jeanlescure/doorlock/commits?author=DiLescure" title="Documentation">📖</a> <a href="https://github.com/jeanlescure/doorlock/pulls?q=is%3Apr+reviewed-by%3ADiLescure" title="Reviewed Pull Requests">👀</a> <a href="#design-DiLescure" title="Design">🎨</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+## License
+
+Copyright (c) 2020-2021 [DoorLock Contributors](https://github.com/jeanlescure/doorlock/#contributors-).<br/>
+Licensed under the Apache License 2.0.

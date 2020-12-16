@@ -19,13 +19,19 @@
   "typings": "typings",
   "author": "Jean M. Lescure",
   "license": "Apache-2.0",
+  "homepage": "https://github.com/jeanlescure/doorlock",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jeanlescure/doorlock"
+  },
   "runkitExampleFilename": "./runkit.js",
   "scripts": {
     "rm:dist": "rm -rf dist/*",
     "dev": "yarn rm:dist && concurrently \"rollup -cw\" \"sleep 10 && nodemon --inspect\"",
     "test": "yarn build && ts-node ./specs/index.ts",
     "build": "yarn rm:dist && NODE_ENV=production rollup -c",
-    "prepare": "yarn link && yarn link doorlock"
+    "prepare": "yarn link && yarn link doorlock",
+    "release": "standard-version"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^15.0.0",
@@ -37,6 +43,7 @@
     "rollup": "^2.27.1",
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-typescript2": "^0.27.2",
+    "standard-version": "^9.0.0",
     "ts-node": "^9.0.0",
     "typescript": "^4.1.2"
   },
