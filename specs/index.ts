@@ -1,5 +1,7 @@
 import assert from 'assert';
 
+const pkg = require('../package.json');
+
 import DoorLock, {
   DoorLockPermission,
   DoorLockRestriction,
@@ -32,6 +34,8 @@ const doorlock = new DoorLock({
   debug: true,
   logFn: (message: string) => console.log('RESULT =>', message),
 });
+
+assert(doorlock.version === pkg.version, 'package version mismatch');
 
 const routeMap = {
   'GET /for-super-admin-only': async (req, res) => {
