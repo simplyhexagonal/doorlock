@@ -273,7 +273,7 @@ save changes to your code), as well as Nodemon to listen for changes in the `dis
 re-run the tests in the `specs` directory as you modify the source!
 
 This includes running node with the `--inspect` flag so you can inspect your code using [Google Chrome Dev Tools](https://nodejs.org/en/docs/guides/debugging-getting-started/)
-(by opening `chrome://inspect` in your browser), you're welcome ;)
+(by opening `chrome://inspect` in your browser), you're welcome 😄
 
 **Build**
 
