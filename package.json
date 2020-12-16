@@ -1,6 +1,6 @@
 {
   "name": "doorlock",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "description": "Allow or deny access based on a hierarchy of restrictions, permissions, roles, and users",
   "keywords": [
     "authorization",
@@ -23,7 +23,7 @@
   "scripts": {
     "rm:dist": "rm -rf dist/*",
     "dev": "yarn rm:dist && concurrently \"rollup -cw\" \"sleep 10 && nodemon --inspect\"",
-    "test": "",
+    "test": "yarn build && ts-node ./specs/index.ts",
     "build": "yarn rm:dist && NODE_ENV=production rollup -c",
     "prepare": "yarn link && yarn link doorlock"
   },
