@@ -1,0 +1,7 @@
+*.log
+*.tgz
+.vscode
+.github
+certs*.json
+*.pem
+.env
