@@ -60,7 +60,7 @@ Please consider:
 
 ## Basics
 
-In order to better understand how to properly use DoorLock, its good to understand
+In order to better understand how to properly use DoorLock, it's good to understand
 the basic entity definitions and assumptions driving the logic.
 
 Firstly, these are the basic entity definitions that detail access hierarchy:
