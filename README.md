@@ -2,11 +2,11 @@
 
 # DoorLock.js
 
+![tests](https://github.com/jeanlescure/doorlock/workflows/tests/badge.svg) [![try on runkit](https://badge.runkitcdn.com/doorlock.svg)](https://npm.runkit.com/doorlock)
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
-
-![tests](https://github.com/jeanlescure/doorlock/workflows/tests/badge.svg) [![try on runkit](https://badge.runkitcdn.com/doorlock.svg)](https://npm.runkit.com/doorlock)
 
 A zero-dependency package to do the heavy-lifting (in back-end APIs) of allowing or denying access
 based on a hierarchy of restrictions, permissions, roles, and users.
