@@ -1,6 +1,13 @@
-import { DoorLockUser, } from '../../src/interfaces';
+import { DoorLockUser, } from 'doorlock';
 
-const users: DoorLockUser[] = [
+interface TestUser extends DoorLockUser {
+  pathExpectations: {
+    fail: string[];
+    pass: string[];
+  };
+};
+
+const users: TestUser[] = [
   // User with no access
   {
     id: 'YhjGOX',
@@ -47,9 +54,7 @@ const users: DoorLockUser[] = [
   {
     id: 'gVilJi',
     roles: [
-      {
-        id: '7asPS1',
-      },
+      '7asPS1',
     ],
     abilities: {
       permissions: [],
@@ -73,9 +78,7 @@ const users: DoorLockUser[] = [
   {
     id: 'IHpwes',
     roles: [
-      {
-        id: 'iukS74',
-      },
+      'iukS74',
     ],
     abilities: {
       permissions: [],
@@ -100,9 +103,7 @@ const users: DoorLockUser[] = [
   {
     id: '643ANo',
     roles: [
-      {
-        id: 'R94YYO',
-      },
+      'R94YYO',
     ],
     abilities: {
       permissions: [],
@@ -126,15 +127,11 @@ const users: DoorLockUser[] = [
   {
     id: 'DW4SXI',
     roles: [
-      {
-        id: 'R94YYO',
-      },
+      'R94YYO',
     ],
     abilities: {
       permissions: [
-        {
-          id: 'Tj0rxW', // doc-delete
-        },
+        'Tj0rxW', // doc-delete
       ],
       restrictions: [],
     },
@@ -159,16 +156,12 @@ const users: DoorLockUser[] = [
   {
     id: 'qoKPjo',
     roles: [
-      {
-        id: 'iukS74',
-      }
+      'iukS74',
     ],
     abilities: {
       permissions: [],
       restrictions: [
-        {
-          id: 'xj5bDL',
-        },
+        'xj5bDL',
       ],
     },
     // test specific
@@ -190,12 +183,8 @@ const users: DoorLockUser[] = [
   {
     id: 'rTx7Wk',
     roles: [
-      {
-        id: 'iukS74',
-      },
-      {
-        id: 'R94YYO',
-      },
+      'iukS74',
+      'R94YYO',
     ],
     abilities: {
       permissions: [],
@@ -219,9 +208,7 @@ const users: DoorLockUser[] = [
   {
     id: 'lMg1sI',
     roles: [
-      {
-        id: 'fpmYTG',
-      },
+      'fpmYTG',
     ],
     abilities: {
       permissions: [],
@@ -245,15 +232,11 @@ const users: DoorLockUser[] = [
   {
     id: 'lMg1sI',
     roles: [
-      {
-        id: 'fpmYTG',
-      }
+      'fpmYTG',
     ],
     abilities: {
       permissions: [
-        {
-          id: 'OK00eo',
-        },
+        'OK00eo',
       ],
       restrictions: [],
     },
@@ -275,9 +258,7 @@ const users: DoorLockUser[] = [
   {
     id: 'TAcDSA',
     roles: [
-      {
-        id: 'sl4dJP',
-      },
+      'sl4dJP',
     ],
     abilities: {
       permissions: [],
@@ -301,16 +282,12 @@ const users: DoorLockUser[] = [
   {
     id: 'oR0k4c',
     roles: [
-      {
-        id: 'sl4dJP',
-      }
+      'sl4dJP',
     ],
     abilities: {
       permissions: [],
       restrictions: [
-        {
-          id: 'xj5bDL', // which means this is a left-over restriction
-        },
+        'xj5bDL', // which means this is a left-over restriction
       ],
     },
     // test specific
@@ -333,17 +310,11 @@ const users: DoorLockUser[] = [
     roles: [],
     abilities: {
       permissions: [
-        {
-          id: 'OK00eo', // doc-create
-        },
-        {
-          id: 'Tj0rxW', // doc-delete
-        },
+        'OK00eo', // doc-create
+        'Tj0rxW', // doc-delete
       ],
       restrictions: [
-        {
-          id: 'xj5bDL', // deny-doc-delete
-        },
+        'xj5bDL', // deny-doc-delete
       ],
     },
     // test specific
@@ -366,14 +337,10 @@ const users: DoorLockUser[] = [
     roles: [],
     abilities: {
       permissions: [
-        {
-          id: 'Tj0rxW', // doc-delete
-        },
+        'Tj0rxW', // doc-delete
       ],
       restrictions: [
-        {
-          id: 'xj5bDL', // deny-doc-delete
-        },
+        'xj5bDL', // deny-doc-delete
       ],
     },
     // test specific
@@ -395,17 +362,11 @@ const users: DoorLockUser[] = [
     roles: [],
     abilities: {
       permissions: [
-        {
-          id: 'Tj0rxW', // doc-delete
-        },
+        'Tj0rxW', // doc-delete
       ],
       restrictions: [
-        {
-          id: 'xj5bDL', // deny-doc-delete
-        },
-        {
-          id: 'v4chur', // deny-dummy
-        }
+        'xj5bDL', // deny-doc-delete
+        'v4chur', // deny-dummy
       ],
     },
     // test specific

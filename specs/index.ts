@@ -142,17 +142,10 @@ const performRequest = async (user: DoorLockUser, route: string) => {
   await routeMap[route](request, response);
 };
 
-interface TestUser extends DoorLockUser {
-  pathExpectations: {
-    fail: string[];
-    pass: string[];
-  };
-};
-
 const routes = Object.keys(routeMap);
 
 routes.forEach((route) => {
-  (users as TestUser[]).forEach((user) => {
+  users.forEach((user) => {
     const allExpectations = [
       ...user.pathExpectations.fail,
       ...user.pathExpectations.pass,

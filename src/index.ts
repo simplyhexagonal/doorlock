@@ -236,7 +236,7 @@ class DoorLock {
     if (this.verifyRoleExists) {
       const result = await this.verifyEntityExistence({
         userId: id,
-        entityIds: roles.map((r) => r.id),
+        entityIds: roles,
         entityHandles: roleHandles,
         entityName: 'role',
         resourceName,
@@ -248,14 +248,14 @@ class DoorLock {
       userRoles = result['userEntities'];
       appRoles = result['appEntities'];
     } else {
-      userRoles = await this.fetchRolesById(roles.map((r) => r.id));
+      userRoles = await this.fetchRolesById(roles);
       appRoles = await this.fetchRolesByHandle(roleHandles);
     }
 
     if (this.verifyAbilitiesExist) {
       const resultP = await this.verifyEntityExistence({
         userId: id,
-        entityIds: permissions.map((r) => r.id),
+        entityIds: permissions,
         entityHandles: permissionHandles,
         entityName: 'permission',
         resourceName,
@@ -269,7 +269,7 @@ class DoorLock {
 
       const resultR = await this.verifyEntityExistence({
         userId: id,
-        entityIds: restrictions.map((r) => r.id),
+        entityIds: restrictions,
         entityHandles: restrictionHandles,
         entityName: 'restriction',
         resourceName,
@@ -281,8 +281,8 @@ class DoorLock {
       userRestrictions = resultR['userEntities'];
       appRestrictions = resultR['appEntities'];
     } else {
-      userPermissions = await this.fetchPermissionsById(permissions.map((p) => p.id));
-      userRestrictions = await this.fetchRestrictionsById(restrictions.map((r) => r.id));
+      userPermissions = await this.fetchPermissionsById(permissions);
+      userRestrictions = await this.fetchRestrictionsById(restrictions);
 
       appPermissions = await this.fetchPermissionsByHandle(permissionHandles);
       appRestrictions = await this.fetchRestrictionsByHandle(restrictionHandles);
@@ -305,7 +305,7 @@ class DoorLock {
         a 
         || (typeof appRoles.find((r) => b.id === r.id) !== 'undefined')
         || b.abilities.permissions.reduce(
-          (j, i) => j || (typeof appPermissions.find((p) => i.id === p.id) !== 'undefined'),
+          (j, i) => j || (typeof appPermissions.find((p) => i === p.id) !== 'undefined'),
           false,
         )
       ),

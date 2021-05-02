@@ -11,14 +11,8 @@ export interface DoorLockPermission extends DoorLockEntity {}
 export interface DoorLockRestriction extends DoorLockEntity {}
 
 export interface DoorLockAbilities {
-  permissions: {
-    id: DoorLockPermission['id'];
-    [key: string]: any;
-  }[];
-  restrictions: {
-    id: DoorLockRestriction['id'];
-    [key: string]: any;
-  }[];
+  permissions: DoorLockPermission['id'][];
+  restrictions: DoorLockRestriction['id'][];
 }
 
 export interface DoorLockAbilityDescriptions {
@@ -32,10 +26,7 @@ export interface DoorLockRole extends DoorLockEntity {
 
 export interface DoorLockUser {
   id: string;
-  roles: {
-    id: DoorLockRole['id'];
-    [key: string]: any;
-  }[];
+  roles: DoorLockRole['id'][];
   abilities: DoorLockAbilities;
   [key: string]: any;
 }

@@ -100,18 +100,18 @@ From the previous, the following is assumed in regards to your user and access r
   handle: string,
   description: string,
   abilities: {
-    permissions: Permission[],
-    restrictions: Restriction[]
+    permissions: PermissionId[],
+    restrictions: RestrictionId[]
   }
 }
 
 // User will be stored with a structure containing at least the following properties:
 {
   id: string,
-  roles: Role[],
+  roles: RoleId[],
   abilities: {
-    permissions: Permission[],
-    restrictions: Restriction[],
+    permissions: PermissionId[],
+    restrictions: RestrictionId[],
   }
 }
 ```

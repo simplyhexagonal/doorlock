@@ -8,21 +8,11 @@ const roles: DoorLockRole[] = [
     description: 'Administrator access',
     abilities: {
       permissions: [
-        {
-          id: 'e6crPQ', // Handle Access
-        },
-        {
-          id: 'OK00eo', // Create Doc
-        },
-        {
-          id: 'kvK4B3', // Read Doc
-        },
-        {
-          id: 'Sl5ile', // Update Doc
-        },
-        {
-          id: 'Tj0rxW' // Delete Doc
-        },
+        'e6crPQ', // Handle Access
+        'OK00eo', // Create Doc
+        'kvK4B3', // Read Doc
+        'Sl5ile', // Update Doc
+        'Tj0rxW' // Delete Doc
       ],
       restrictions: [],
     },
@@ -34,18 +24,10 @@ const roles: DoorLockRole[] = [
     description: 'Author access',
     abilities: {
       permissions: [
-        {
-          id: 'OK00eo', // Create Doc
-        },
-        {
-          id: 'kvK4B3', // Read Doc
-        },
-        {
-          id: 'Sl5ile', // Update Doc
-        },
-        {
-          id: 'Tj0rxW' // Delete Doc
-        },
+        'OK00eo', // Create Doc
+        'kvK4B3', // Read Doc
+        'Sl5ile', // Update Doc
+        'Tj0rxW' // Delete Doc
       ],
       restrictions: [],
     },
@@ -57,23 +39,13 @@ const roles: DoorLockRole[] = [
     description: 'Author access for hot-headed authors',
     abilities: {
       permissions: [
-        {
-          id: 'OK00eo', // Create Doc
-        },
-        {
-          id: 'kvK4B3', // Read Doc
-        },
-        {
-          id: 'Sl5ile', // Update Doc
-        },
-        {
-          id: 'Tj0rxW' // Delete Doc
-        },
+        'OK00eo', // Create Doc
+        'kvK4B3', // Read Doc
+        'Sl5ile', // Update Doc
+        'Tj0rxW' // Delete Doc
       ],
       restrictions: [
-        {
-          id: 'xj5bDL',
-        }
+        'xj5bDL',
       ],
     },
   },
@@ -84,12 +56,8 @@ const roles: DoorLockRole[] = [
     description: 'Editor access',
     abilities: {
       permissions: [
-        {
-          id: 'kvK4B3', // Read Doc
-        },
-        {
-          id: 'Sl5ile', // Update Doc
-        },
+        'kvK4B3', // Read Doc
+        'Sl5ile', // Update Doc
       ],
       restrictions: [],
     },
@@ -101,9 +69,7 @@ const roles: DoorLockRole[] = [
     description: 'Viewer access',
     abilities: {
       permissions: [
-        {
-          id: 'kvK4B3', // Read Doc
-        },
+        'kvK4B3', // Read Doc
       ],
       restrictions: [],
     },
