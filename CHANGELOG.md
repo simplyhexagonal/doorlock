@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/jeanlescure/doorlock/compare/v1.0.0...v1.1.0) (2021-05-02)
+
+
+### Features
+
+* save storage space by commiting to reference entities using id only ([354ba6b](https://github.com/jeanlescure/doorlock/commit/354ba6b5613a7d3c46b432317fdb0fb0c9f01db6))
+
 ## 1.0.0 (2020-12-16)
 
 
