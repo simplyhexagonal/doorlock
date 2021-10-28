@@ -28,6 +28,11 @@
       "publish": false
     }
   },
+  "files": [
+    "package.json",
+    "dist",
+    "README.md"
+  ],
   "author": "Jean M. Lescure",
   "license": "Apache-2.0",
   "devDependencies": {
