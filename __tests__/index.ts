@@ -1,18 +1,18 @@
-import assert from 'assert';
-
-const pkg = require('../package.json');
+import Logger from '@simplyhexagonal/logger';
 
 import DoorLock, {
   DoorLockPermission,
   DoorLockRestriction,
   DoorLockRole,
   DoorLockUser,
-} from 'doorlock';
+} from '../dist/doorlock';
 
-import permissions from './mocks/permissions';
-import restrictions from './mocks/restrictions';
-import roles from './mocks/roles';
-import users from './mocks/users';
+import permissions from '../__fixtures__/permissions';
+import restrictions from '../__fixtures__/restrictions';
+import roles from '../__fixtures__/roles';
+import users from '../__fixtures__/users';
+
+const logger = new Logger({});
 
 const fetchRolesById = async (roleIds: DoorLockRole['id'][]) => (await roles()).filter((r) => roleIds.includes(r.id));
 const fetchPermissionsById = async (permissionIds: DoorLockPermission['id'][]) => (await permissions()).filter((p) => permissionIds.includes(p.id));
@@ -32,13 +32,11 @@ const doorlock = new DoorLock({
   verifyRoleExists: true,
   verifyAbilitiesExist: true,
   debug: true,
-  logFn: (message: string) => console.log('RESULT =>', message),
+  logFn: (message: string) => {logger.debug('RESULT =>', message)},
 });
 
-assert(doorlock.version === pkg.version, 'package version mismatch');
-
 const routeMap = {
-  'GET /for-super-admin-only': async (req, res) => {
+  'GET /for-super-admin-only': async (req: any, res: any) => {
     await doorlock.evaluateAbilities(
       req.user,
       {
@@ -52,7 +50,7 @@ const routeMap = {
 
     res.send('42');
   },
-  'GET /for-admin-only': async (req, res) => {
+  'GET /for-admin-only': async (req: any, res: any) => {
     await doorlock.evaluateAbilities(
       req.user,
       {
@@ -66,7 +64,7 @@ const routeMap = {
 
     res.send('welcome to the club');
   },
-  'POST /docs': async (req, res) => {
+  'POST /docs': async (req: any, res: any) => {
     await doorlock.evaluateAbilities(
       req.user,
       {
@@ -80,7 +78,7 @@ const routeMap = {
 
     res.send('hope you write better endings than king');
   },
-  'GET /docs': async (req, res) => {
+  'GET /docs': async (req: any, res: any) => {
     await doorlock.evaluateAbilities(
       req.user,
       {
@@ -94,7 +92,7 @@ const routeMap = {
 
     res.send('readers lives a thousand lives before they die');
   },
-  'PUT /docs': async (req, res) => {
+  'PUT /docs': async (req: any, res: any) => {
     await doorlock.evaluateAbilities(
       req.user,
       {
@@ -108,7 +106,7 @@ const routeMap = {
 
     res.send('oh, I have that same dress');
   },
-  'DELETE /docs': async (req, res) => {
+  'DELETE /docs': async (req: any, res: any) => {
     await doorlock.evaluateAbilities(
       req.user,
       {
@@ -134,41 +132,49 @@ const performRequest = async (user: DoorLockUser, route: string) => {
   console.log(`Testing user ${user.id} against route: ${route}`);
 
   const response = {
-    send: (responseMessage) => {
+    send: (responseMessage: string) => {
       console.log(`${route} (${user.id}):`,responseMessage);
     },
   };
 
-  await routeMap[route](request, response);
+  await routeMap[route as keyof typeof routeMap](request, response);
 };
 
 const routes = Object.keys(routeMap);
 
-routes.forEach((route) => {
-  users.forEach((user) => {
-    const allExpectations = [
-      ...user.pathExpectations.fail,
-      ...user.pathExpectations.pass,
-    ];
+describe('DoorLock', () => {
+  it('works', async () => {
+    await Promise.all(
+      routes.map((route) => {
+        return Promise.all(
+          users.map((user) => {
+            const allExpectations = [
+              ...user.pathExpectations.fail,
+              ...user.pathExpectations.pass,
+            ];
 
-    assert(allExpectations.sort().join() === routes.sort().join(), `user ${user.id} is missing route expectations`);
+            expect(allExpectations.sort().join()).toBe(routes.sort().join());
 
-    (async () => {
-      const result = await performRequest(
-        user,
-        route,
-      ).then(() => true).catch((e) => {
-        // Only uncomment if all else fails
-        // console.log(e);
+            return (async () => {
+              const result = await performRequest(
+                user,
+                route,
+              ).then(() => true).catch((e) => {
+                // Only uncomment if all else fails
+                // console.log(e);
 
-        return false;
-      });
+                return false;
+              });
 
-      if (user.pathExpectations.fail.includes(route)) {
-        assert(!result, `user ${user.id} should have been blocked for route ${route} but was allowed through`);
-      } else {
-        assert(result, `user ${user.id} should have been allowed through for route ${route} but was blocked`);
-      }
-    })();
+              if (user.pathExpectations.fail.includes(route)) {
+                expect(!result).toBe(true);
+              } else {
+                expect(result).toBe(true);
+              }
+            })();
+          })
+        );
+      })
+    );
   });
 });

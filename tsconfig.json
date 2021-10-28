@@ -1,19 +1,21 @@
 {
-  "ts-node": {
-    "compilerOptions": {
-      "module": "commonjs"
-    }
-  },
   "compilerOptions": {
-    "declaration": true,
-    "target": "ES5",
-    "sourceMap": true,
-    "pretty": true,
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "downlevelIteration": true,
     "esModuleInterop": true,
-    "outDir":"dist",
-    "declarationDir": "typings"
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "lib": ["ESNext"],
+    "moduleResolution": "node",
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "types": ["node", "jest"],
   },
-  "include": [
-    "./src"
-  ],
+  "include": ["src/index.ts"],
+  "exclude": ["node_modules", "dist", "src/test.ts"]
 }

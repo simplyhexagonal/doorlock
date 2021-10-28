@@ -1,7 +1,4 @@
 name: tests
-
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the main branch
 on:
   push:
     branches:
@@ -9,29 +6,30 @@ on:
   pull_request:
     branches:
       - main
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  test:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-18.04
+  tests:
+    name: Test on Node ${{ matrix.node }} and ${{ matrix.os }}
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node: ['14.x', '16.x']
+        os: [ubuntu-latest, macOS-latest]
+
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2.3.4
+      - name: Checkout repo
+        uses: actions/checkout@v2
 
-    - name: Setup Node
-      uses: actions/setup-node@v1.4.4
-      with:
-        node-version: '12.x'
+      - name: Use Node ${{ matrix.node }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
 
-    - name: Install Yarn
-      run: npm install -g yarn
+      - name: Install PNPM
+        run: npm install -g pnpm
 
-    - name: Install Dependencies
-      run: yarn
+      - name: Install Dependencies
+        run: pnpm i
 
-    - name: Test
-      run: yarn test
+      - name: Test
+        run: pnpm test

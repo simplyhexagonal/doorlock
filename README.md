@@ -47,16 +47,21 @@ doorlock.evaluateAbilities(
 
 ## Before you continue
 
-- If you are also looking to implement login using Google, Facebook, Github, and/or implement your own custom SSO, take a look at [Session SSO](https://github.com/jeanlescure/session-sso)
-- If you'd like to build Typescript packages like this one, check out the [No BS Typescript Boilerplate](https://github.com/jeanlescure/no-bs-typescript-boilerplate)
+- If you are also looking to implement login using Google, Facebook, Github, and/or implement your own custom SSO, take a look at [Session SSO](https://github.com/simplyhexagonal/session-sso)
 
-## Like this project? ❤️
+## Open source notice
+
+This project is open to updates by its users, [I](https://github.com/jeanlescure) ensure that PRs are relevant to the community.
+In other words, if you find a bug or want a new feature, please help us by becoming one of the
+[contributors](#contributors-) ✌️ ! See the [contributing section](#contributing)
+
+## Like this module? ❤
 
 Please consider:
 
 - [Buying me a coffee](https://www.buymeacoffee.com/jeanlescure) ☕
-- Supporting me on [Patreon](https://www.patreon.com/jeanlescure) 🏆
-- Starring this repo on [Github](https://github.com/jeanlescure/doorlock) 🌟
+- Supporting Simply Hexagonal on [Open Collective](https://opencollective.com/simplyhexagonal) 🏆
+- Starring this repo on [Github](https://github.com/simplyhexagonal/doorlock) 🌟
 
 ## Basics
 
@@ -242,7 +247,6 @@ server.post('/doc', docManipulationAccessControl, (req, res) => { /* ... */ });
 server.get('/doc', docManipulationAccessControl, (req, res) => { /* ... */ });
 server.put('/doc', docManipulationAccessControl, (req, res) => { /* ... */ });
 server.delete('/doc', docManipulationAccessControl, (req, res) => { /* ... */ });
-
 ```
 
 If you would like a functioning example, you're welcome to try [this dummy server with DoorLock example on Runkit](https://npm.runkit.com/doorlock).
@@ -262,27 +266,6 @@ and alert you of any error **other** than `Unauthorized`.
 
 Rollup was chosen to handle the transpiling, compression, and any other transformations needed to get
 Typescript code running as quickly and performant as possible.
-
-**Development**
-
-```sh
-yarn dev
-```
-
-Uses [concurrently](https://www.npmjs.com/package/concurrently) to run Rollup in watch mode (which means it will transpile to `dist` when you
-save changes to your code), as well as Nodemon to listen for changes in the `dist` directory and
-re-run the tests in the `specs` directory as you modify the source!
-
-This includes running node with the `--inspect` flag so you can inspect your code using [Google Chrome Dev Tools](https://nodejs.org/en/docs/guides/debugging-getting-started/)
-(by opening `chrome://inspect` in your browser), you're welcome 😄
-
-**Build**
-
-```sh
-yarn build
-```
-
-This command will build the `dist/index.js`, uglified and tree-shaken so it loads/runs faster.
 
 ## Contributing
 

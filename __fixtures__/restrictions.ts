@@ -1,4 +1,4 @@
-import { DoorLockRestriction, } from '../../src/interfaces';
+import { DoorLockRestriction, } from '../dist/doorlock';
 
 const restrictions: DoorLockRestriction[] = [
   {

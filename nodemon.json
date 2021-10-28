@@ -1,5 +1,0 @@
-{
-  "watch": ["dist", "specs"],
-  "ext": "js,json,ts",
-  "exec": "ts-node ./specs/index.ts"
-}

@@ -1,4 +1,4 @@
-import { DoorLockRole, } from '../../src/interfaces';
+import { DoorLockRole, } from '../dist/doorlock';
 
 const roles: DoorLockRole[] = [
   {

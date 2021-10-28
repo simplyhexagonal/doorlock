@@ -42,5 +42,5 @@ export interface DoorLockOptions {
   verifyRoleExists?: boolean;
   verifyAbilitiesExist?: boolean;
   debug?: boolean;
-  logFn?: (...args) => any | Function;
+  logFn: (...args: any[]) => void | ((...args: any[]) => Promise<void>);
 }

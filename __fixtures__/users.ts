@@ -1,4 +1,4 @@
-import { DoorLockUser, } from 'doorlock';
+import { DoorLockUser, } from '../dist/doorlock';
 
 interface TestUser extends DoorLockUser {
   pathExpectations: {

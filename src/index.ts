@@ -9,8 +9,11 @@ import {
 
 export * from './interfaces';
 
+// @ts-ignore
+import { version } from '../package.json';
+
 interface DoorLockLogOptions {
-  logFn?: (...args) => any | Function;
+  logFn: DoorLockOptions['logFn'];
   userId: string;
   wasAllowed: boolean;
   resourceName?: string;
@@ -27,6 +30,8 @@ interface DoorLockEvaluationOptions {
 }
 
 class DoorLock {
+  static version = version;
+
   superAdminId: string;
   fetchRolesById: DoorLockOptions['fetchRolesById'];
   fetchPermissionsById: DoorLockOptions['fetchPermissionsById'];
@@ -38,7 +43,6 @@ class DoorLock {
   verifyAbilitiesExist: boolean = false;
   debug: boolean = false;
   logFn: DoorLockOptions['logFn'];
-  version: string = process.env.VERSION;
 
   constructor({
     superAdminId,
@@ -62,7 +66,7 @@ class DoorLock {
     this.fetchRestrictionsByHandle = fetchRestrictionsByHandle;
     this.verifyRoleExists = verifyRoleExists || this.verifyRoleExists;
     this.verifyAbilitiesExist = verifyAbilitiesExist || this.verifyAbilitiesExist;
-    this.debug = debug;
+    this.debug = Boolean(debug);
     this.logFn = logFn;
 
     console.log(`DoorLock initiated with options:`, {
@@ -89,7 +93,7 @@ class DoorLock {
   };
 
   logAbilityEvaluation = ({
-    logFn = this.logFn,
+    logFn,
     userId,
     wasAllowed,
     resourceName,
@@ -125,8 +129,8 @@ class DoorLock {
     entityIds: DoorLockEntity['id'][];
     entityHandles: DoorLockEntity['handle'][];
     entityName: string;
-    resourceName: string;
-    resourceIdentifier: string;
+    resourceName?: string;
+    resourceIdentifier?: string;
     fetchByIdsFn: (entityIds: DoorLockEntity['id'][]) => Promise<T[]>;
     fetchByHandlesFn: (entityHandles: DoorLockEntity['handle'][]) => Promise<T[]>;
   }): Promise<{userEntities: T[]; appEntities: T[];}> => {
@@ -139,7 +143,7 @@ class DoorLock {
     appEntities.forEach((e) => existingEntities.push(e));
 
     if (existingEntities.length !== (entityIds.length + entityHandles.length)) {
-      const missingEntities = [];
+      const missingEntities: string[] = [];
 
       entityIds.forEach((i) => {
         const me = existingEntities.find((e) => e.id === i);
@@ -166,6 +170,7 @@ class DoorLock {
       );
 
       this.logAbilityEvaluation({
+        logFn: this.logFn,
         userId,
         wasAllowed: false,
         resourceName,
@@ -194,6 +199,7 @@ class DoorLock {
   ): Promise<boolean | never> => {
     if (this.checkSuperAdmin(user)) {
       this.logAbilityEvaluation({
+        logFn: this.logFn,
         userId: user.id,
         wasAllowed: true,
         resourceName,
@@ -206,6 +212,7 @@ class DoorLock {
 
     if (roleHandles.length + permissionHandles.length + restrictionHandles.length < 1) {
       this.logAbilityEvaluation({
+        logFn: this.logFn,
         userId: user.id,
         wasAllowed: false,
         resourceName,
@@ -290,6 +297,7 @@ class DoorLock {
 
     if (userRoles.length + userPermissions.length < 1) {
       this.logAbilityEvaluation({
+        logFn: this.logFn,
         userId: user.id,
         wasAllowed: false,
         resourceName,
@@ -324,6 +332,7 @@ class DoorLock {
 
     if ((isPermittedByRole || isPermittedByPermissions) && isNotRestricted) {
       this.logAbilityEvaluation({
+        logFn: this.logFn,
         userId: user.id,
         wasAllowed: true,
         resourceName,
@@ -335,6 +344,7 @@ class DoorLock {
     }
 
     this.logAbilityEvaluation({
+      logFn: this.logFn,
       userId: user.id,
       wasAllowed: false,
       resourceName,

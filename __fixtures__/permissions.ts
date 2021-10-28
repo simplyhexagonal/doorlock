@@ -1,4 +1,4 @@
-import { DoorLockPermission, } from '../../src/interfaces';
+import { DoorLockPermission, } from '../dist/doorlock';
 
 const permissions: DoorLockPermission[] = [
   {
