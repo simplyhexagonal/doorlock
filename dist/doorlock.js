@@ -14,7 +14,7 @@ var Doorlock = (() => {
   });
 
   // package.json
-  var version = "1.1.2";
+  var version = "1.2.0";
 
   // src/index.ts
   var DoorLock = class {
