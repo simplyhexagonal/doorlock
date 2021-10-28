@@ -1,7 +1,6 @@
 import { DoorLockEntity, DoorLockOptions, DoorLockPermission, DoorLockRestriction, DoorLockRole, DoorLockUser } from './interfaces';
 export * from './interfaces';
 interface DoorLockLogOptions {
-    logFn: DoorLockOptions['logFn'];
     userId: string;
     wasAllowed: boolean;
     resourceName?: string;
@@ -27,10 +26,10 @@ declare class DoorLock {
     verifyRoleExists: boolean;
     verifyAbilitiesExist: boolean;
     debug: boolean;
-    logFn: DoorLockOptions['logFn'];
+    logFn: (...args: any[]) => void | ((...args: any[]) => Promise<void>);
     constructor({ superAdminId, fetchRolesById, fetchPermissionsById, fetchRestrictionsById, fetchRolesByHandle, fetchPermissionsByHandle, fetchRestrictionsByHandle, verifyRoleExists, verifyAbilitiesExist, debug, logFn, }: DoorLockOptions);
     checkSuperAdmin: ({ id }: DoorLockUser) => boolean;
-    logAbilityEvaluation: ({ logFn, userId, wasAllowed, resourceName, resourceIdentifier, reason, }: DoorLockLogOptions) => void;
+    logAbilityEvaluation: ({ userId, wasAllowed, resourceName, resourceIdentifier, reason, }: DoorLockLogOptions) => void;
     verifyEntityExistence: <T extends DoorLockEntity>({ userId, entityHandles, entityIds, entityName, resourceName, resourceIdentifier, fetchByIdsFn, fetchByHandlesFn, }: {
         userId: DoorLockUser['id'];
         entityIds: DoorLockEntity['id'][];

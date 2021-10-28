@@ -13,7 +13,6 @@ export * from './interfaces';
 import { version } from '../package.json';
 
 interface DoorLockLogOptions {
-  logFn: DoorLockOptions['logFn'];
   userId: string;
   wasAllowed: boolean;
   resourceName?: string;
@@ -42,7 +41,7 @@ class DoorLock {
   verifyRoleExists: boolean = false;
   verifyAbilitiesExist: boolean = false;
   debug: boolean = false;
-  logFn: DoorLockOptions['logFn'];
+  logFn: (...args: any[]) => void | ((...args: any[]) => Promise<void>) = console.log;
 
   constructor({
     superAdminId,
@@ -55,7 +54,7 @@ class DoorLock {
     verifyRoleExists,
     verifyAbilitiesExist,
     debug,
-    logFn = console.log,
+    logFn,
   }: DoorLockOptions) {
     this.superAdminId = superAdminId;
     this.fetchRolesById = fetchRolesById;
@@ -67,7 +66,7 @@ class DoorLock {
     this.verifyRoleExists = verifyRoleExists || this.verifyRoleExists;
     this.verifyAbilitiesExist = verifyAbilitiesExist || this.verifyAbilitiesExist;
     this.debug = Boolean(debug);
-    this.logFn = logFn;
+    this.logFn = logFn || this.logFn;
 
     console.log(`DoorLock initiated with options:`, {
       superAdminId: this.superAdminId,
@@ -93,7 +92,6 @@ class DoorLock {
   };
 
   logAbilityEvaluation = ({
-    logFn,
     userId,
     wasAllowed,
     resourceName,
@@ -111,7 +109,7 @@ class DoorLock {
       );
       message += (reason) ? ` due to: ${reason}` : '';
 
-      logFn(message);
+      this.logFn(message);
     }
   };
 
@@ -170,7 +168,6 @@ class DoorLock {
       );
 
       this.logAbilityEvaluation({
-        logFn: this.logFn,
         userId,
         wasAllowed: false,
         resourceName,
@@ -199,7 +196,6 @@ class DoorLock {
   ): Promise<boolean | never> => {
     if (this.checkSuperAdmin(user)) {
       this.logAbilityEvaluation({
-        logFn: this.logFn,
         userId: user.id,
         wasAllowed: true,
         resourceName,
@@ -212,7 +208,6 @@ class DoorLock {
 
     if (roleHandles.length + permissionHandles.length + restrictionHandles.length < 1) {
       this.logAbilityEvaluation({
-        logFn: this.logFn,
         userId: user.id,
         wasAllowed: false,
         resourceName,
@@ -297,7 +292,6 @@ class DoorLock {
 
     if (userRoles.length + userPermissions.length < 1) {
       this.logAbilityEvaluation({
-        logFn: this.logFn,
         userId: user.id,
         wasAllowed: false,
         resourceName,
@@ -332,7 +326,6 @@ class DoorLock {
 
     if ((isPermittedByRole || isPermittedByPermissions) && isNotRestricted) {
       this.logAbilityEvaluation({
-        logFn: this.logFn,
         userId: user.id,
         wasAllowed: true,
         resourceName,
@@ -344,7 +337,6 @@ class DoorLock {
     }
 
     this.logAbilityEvaluation({
-      logFn: this.logFn,
       userId: user.id,
       wasAllowed: false,
       resourceName,

@@ -29,11 +29,12 @@ var Doorlock = (() => {
       verifyRoleExists,
       verifyAbilitiesExist,
       debug,
-      logFn = console.log
+      logFn
     }) {
       this.verifyRoleExists = false;
       this.verifyAbilitiesExist = false;
       this.debug = false;
+      this.logFn = console.log;
       this.checkSuperAdmin = ({ id }) => {
         if (this.superAdminId && id === this.superAdminId) {
           return true;
@@ -41,7 +42,6 @@ var Doorlock = (() => {
         return false;
       };
       this.logAbilityEvaluation = ({
-        logFn,
         userId,
         wasAllowed,
         resourceName,
@@ -52,7 +52,7 @@ var Doorlock = (() => {
           let message = `user ${userId} was ${wasAllowed ? "allowed" : "not allowed"} access`;
           message += resourceName || resourceIdentifier ? ` to ${resourceName ? `${resourceName}` : ""} ${resourceIdentifier ? `${resourceIdentifier}` : ""}` : "";
           message += reason ? ` due to: ${reason}` : "";
-          logFn(message);
+          this.logFn(message);
         }
       };
       this.verifyEntityExistence = async ({
@@ -86,7 +86,6 @@ var Doorlock = (() => {
           });
           const reason = missingEntities.length === 0 ? `${entityName} count does not match, this means there are duplicate ${entityName}s either on the user record or the resource definition, cowardly refusing to continue` : `non-existing ${entityName}(s) (${missingEntities.join()})`;
           this.logAbilityEvaluation({
-            logFn: this.logFn,
             userId,
             wasAllowed: false,
             resourceName,
@@ -109,7 +108,6 @@ var Doorlock = (() => {
       }) => {
         if (this.checkSuperAdmin(user)) {
           this.logAbilityEvaluation({
-            logFn: this.logFn,
             userId: user.id,
             wasAllowed: true,
             resourceName,
@@ -120,7 +118,6 @@ var Doorlock = (() => {
         }
         if (roleHandles.length + permissionHandles.length + restrictionHandles.length < 1) {
           this.logAbilityEvaluation({
-            logFn: this.logFn,
             userId: user.id,
             wasAllowed: false,
             resourceName,
@@ -193,7 +190,6 @@ var Doorlock = (() => {
         }
         if (userRoles.length + userPermissions.length < 1) {
           this.logAbilityEvaluation({
-            logFn: this.logFn,
             userId: user.id,
             wasAllowed: false,
             resourceName,
@@ -207,7 +203,6 @@ var Doorlock = (() => {
         const isNotRestricted = userRestrictions.reduce((a, b) => a && !appRestrictions.includes(b), true);
         if ((isPermittedByRole || isPermittedByPermissions) && isNotRestricted) {
           this.logAbilityEvaluation({
-            logFn: this.logFn,
             userId: user.id,
             wasAllowed: true,
             resourceName,
@@ -217,7 +212,6 @@ var Doorlock = (() => {
           return true;
         }
         this.logAbilityEvaluation({
-          logFn: this.logFn,
           userId: user.id,
           wasAllowed: false,
           resourceName,
@@ -236,7 +230,7 @@ var Doorlock = (() => {
       this.verifyRoleExists = verifyRoleExists || this.verifyRoleExists;
       this.verifyAbilitiesExist = verifyAbilitiesExist || this.verifyAbilitiesExist;
       this.debug = Boolean(debug);
-      this.logFn = logFn;
+      this.logFn = logFn || this.logFn;
       console.log(`DoorLock initiated with options:`, {
         superAdminId: this.superAdminId,
         fetchRolesById: this.fetchRolesById,
