@@ -35,8 +35,8 @@ var Doorlock = (() => {
       this.verifyAbilitiesExist = false;
       this.debug = false;
       this.logFn = console.log;
-      this.checkSuperAdmin = ({ id }) => {
-        if (this.superAdminId && id === this.superAdminId) {
+      this.checkSuperAdmin = ({ userId }) => {
+        if (this.superAdminId && userId === this.superAdminId) {
           return true;
         }
         return false;
@@ -73,7 +73,7 @@ var Doorlock = (() => {
         if (existingEntities.length !== entityIds.length + entityHandles.length) {
           const missingEntities = [];
           entityIds.forEach((i) => {
-            const me = existingEntities.find((e) => e.id === i);
+            const me = existingEntities.find((e) => e.entityId === i);
             if (!me) {
               missingEntities.push(i);
             }
@@ -108,7 +108,7 @@ var Doorlock = (() => {
       }) => {
         if (this.checkSuperAdmin(user)) {
           this.logAbilityEvaluation({
-            userId: user.id,
+            userId: user.userId,
             wasAllowed: true,
             resourceName,
             resourceIdentifier,
@@ -118,7 +118,7 @@ var Doorlock = (() => {
         }
         if (roleHandles.length + permissionHandles.length + restrictionHandles.length < 1) {
           this.logAbilityEvaluation({
-            userId: user.id,
+            userId: user.userId,
             wasAllowed: false,
             resourceName,
             resourceIdentifier,
@@ -127,7 +127,7 @@ var Doorlock = (() => {
           throw new Error("Unauthorized");
         }
         const {
-          id,
+          userId,
           roles,
           abilities: {
             permissions,
@@ -142,7 +142,7 @@ var Doorlock = (() => {
         let appRestrictions;
         if (this.verifyRoleExists) {
           const result = await this.verifyEntityExistence({
-            userId: id,
+            userId,
             entityIds: roles,
             entityHandles: roleHandles,
             entityName: "role",
@@ -159,7 +159,7 @@ var Doorlock = (() => {
         }
         if (this.verifyAbilitiesExist) {
           const resultP = await this.verifyEntityExistence({
-            userId: id,
+            userId,
             entityIds: permissions,
             entityHandles: permissionHandles,
             entityName: "permission",
@@ -171,7 +171,7 @@ var Doorlock = (() => {
           userPermissions = resultP["userEntities"];
           appPermissions = resultP["appEntities"];
           const resultR = await this.verifyEntityExistence({
-            userId: id,
+            userId,
             entityIds: restrictions,
             entityHandles: restrictionHandles,
             entityName: "restriction",
@@ -190,7 +190,7 @@ var Doorlock = (() => {
         }
         if (userRoles.length + userPermissions.length < 1) {
           this.logAbilityEvaluation({
-            userId: user.id,
+            userId: user.userId,
             wasAllowed: false,
             resourceName,
             resourceIdentifier,
@@ -198,12 +198,12 @@ var Doorlock = (() => {
           });
           throw new Error("Unauthorized");
         }
-        const isPermittedByRole = userRoles.reduce((a, b) => a || typeof appRoles.find((r) => b.id === r.id) !== "undefined" || b.abilities.permissions.reduce((j, i) => j || typeof appPermissions.find((p) => i === p.id) !== "undefined", false), false);
-        const isPermittedByPermissions = userPermissions.reduce((a, b) => a || typeof appPermissions.find((r) => b.id === r.id) !== "undefined", false);
+        const isPermittedByRole = userRoles.reduce((a, b) => a || typeof appRoles.find((r) => b.entityId === r.entityId) !== "undefined" || b.abilities.permissions.reduce((j, i) => j || typeof appPermissions.find((p) => i === p.entityId) !== "undefined", false), false);
+        const isPermittedByPermissions = userPermissions.reduce((a, b) => a || typeof appPermissions.find((r) => b.entityId === r.entityId) !== "undefined", false);
         const isNotRestricted = userRestrictions.reduce((a, b) => a && !appRestrictions.includes(b), true);
         if ((isPermittedByRole || isPermittedByPermissions) && isNotRestricted) {
           this.logAbilityEvaluation({
-            userId: user.id,
+            userId: user.userId,
             wasAllowed: true,
             resourceName,
             resourceIdentifier,
@@ -212,7 +212,7 @@ var Doorlock = (() => {
           return true;
         }
         this.logAbilityEvaluation({
-          userId: user.id,
+          userId: user.userId,
           wasAllowed: false,
           resourceName,
           resourceIdentifier,

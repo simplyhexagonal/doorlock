@@ -83,8 +83,8 @@ class DoorLock {
     });
   }
 
-  checkSuperAdmin = ({id}: DoorLockUser): boolean => {
-    if (this.superAdminId && id === this.superAdminId) {
+  checkSuperAdmin = ({userId}: DoorLockUser): boolean => {
+    if (this.superAdminId && userId === this.superAdminId) {
       return true;
     }
 
@@ -123,13 +123,13 @@ class DoorLock {
     fetchByIdsFn,
     fetchByHandlesFn,
   }: {
-    userId: DoorLockUser['id'];
-    entityIds: DoorLockEntity['id'][];
+    userId: DoorLockUser['userId'];
+    entityIds: DoorLockEntity['entityId'][];
     entityHandles: DoorLockEntity['handle'][];
     entityName: string;
     resourceName?: string;
     resourceIdentifier?: string;
-    fetchByIdsFn: (entityIds: DoorLockEntity['id'][]) => Promise<T[]>;
+    fetchByIdsFn: (entityIds: DoorLockEntity['entityId'][]) => Promise<T[]>;
     fetchByHandlesFn: (entityHandles: DoorLockEntity['handle'][]) => Promise<T[]>;
   }): Promise<{userEntities: T[]; appEntities: T[];}> => {
     const existingEntities: DoorLockEntity[] = [];
@@ -144,7 +144,7 @@ class DoorLock {
       const missingEntities: string[] = [];
 
       entityIds.forEach((i) => {
-        const me = existingEntities.find((e) => e.id === i);
+        const me = existingEntities.find((e) => e.entityId === i);
 
         if (!me) {
           missingEntities.push(i);
@@ -196,7 +196,7 @@ class DoorLock {
   ): Promise<boolean | never> => {
     if (this.checkSuperAdmin(user)) {
       this.logAbilityEvaluation({
-        userId: user.id,
+        userId: user.userId,
         wasAllowed: true,
         resourceName,
         resourceIdentifier,
@@ -208,7 +208,7 @@ class DoorLock {
 
     if (roleHandles.length + permissionHandles.length + restrictionHandles.length < 1) {
       this.logAbilityEvaluation({
-        userId: user.id,
+        userId: user.userId,
         wasAllowed: false,
         resourceName,
         resourceIdentifier,
@@ -219,7 +219,7 @@ class DoorLock {
     }
 
     const {
-      id,
+      userId,
       roles,
       abilities: {
         permissions,
@@ -237,7 +237,7 @@ class DoorLock {
 
     if (this.verifyRoleExists) {
       const result = await this.verifyEntityExistence({
-        userId: id,
+        userId,
         entityIds: roles,
         entityHandles: roleHandles,
         entityName: 'role',
@@ -256,7 +256,7 @@ class DoorLock {
 
     if (this.verifyAbilitiesExist) {
       const resultP = await this.verifyEntityExistence({
-        userId: id,
+        userId,
         entityIds: permissions,
         entityHandles: permissionHandles,
         entityName: 'permission',
@@ -270,7 +270,7 @@ class DoorLock {
       appPermissions = resultP['appEntities'];
 
       const resultR = await this.verifyEntityExistence({
-        userId: id,
+        userId,
         entityIds: restrictions,
         entityHandles: restrictionHandles,
         entityName: 'restriction',
@@ -292,7 +292,7 @@ class DoorLock {
 
     if (userRoles.length + userPermissions.length < 1) {
       this.logAbilityEvaluation({
-        userId: user.id,
+        userId: user.userId,
         wasAllowed: false,
         resourceName,
         resourceIdentifier,
@@ -305,9 +305,9 @@ class DoorLock {
     const isPermittedByRole = userRoles.reduce(
       (a, b) => (
         a 
-        || (typeof appRoles.find((r) => b.id === r.id) !== 'undefined')
+        || (typeof appRoles.find((r) => b.entityId === r.entityId) !== 'undefined')
         || b.abilities.permissions.reduce(
-          (j, i) => j || (typeof appPermissions.find((p) => i === p.id) !== 'undefined'),
+          (j, i) => j || (typeof appPermissions.find((p) => i === p.entityId) !== 'undefined'),
           false,
         )
       ),
@@ -315,7 +315,7 @@ class DoorLock {
     );
 
     const isPermittedByPermissions = userPermissions.reduce(
-      (a, b) => a || (typeof appPermissions.find((r) => b.id === r.id) !== 'undefined'),
+      (a, b) => a || (typeof appPermissions.find((r) => b.entityId === r.entityId) !== 'undefined'),
       false,
     );
 
@@ -326,7 +326,7 @@ class DoorLock {
 
     if ((isPermittedByRole || isPermittedByPermissions) && isNotRestricted) {
       this.logAbilityEvaluation({
-        userId: user.id,
+        userId: user.userId,
         wasAllowed: true,
         resourceName,
         resourceIdentifier,
@@ -337,7 +337,7 @@ class DoorLock {
     }
 
     this.logAbilityEvaluation({
-      userId: user.id,
+      userId: user.userId,
       wasAllowed: false,
       resourceName,
       resourceIdentifier,

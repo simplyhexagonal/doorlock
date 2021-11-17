@@ -16,6 +16,6 @@
     "strict": true,
     "types": ["node", "jest"],
   },
-  "include": ["src/index.ts"],
-  "exclude": ["node_modules", "dist", "src/test.ts"]
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
 }

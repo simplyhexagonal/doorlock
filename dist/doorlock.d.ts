@@ -28,16 +28,16 @@ declare class DoorLock {
     debug: boolean;
     logFn: (...args: any[]) => void | ((...args: any[]) => Promise<void>);
     constructor({ superAdminId, fetchRolesById, fetchPermissionsById, fetchRestrictionsById, fetchRolesByHandle, fetchPermissionsByHandle, fetchRestrictionsByHandle, verifyRoleExists, verifyAbilitiesExist, debug, logFn, }: DoorLockOptions);
-    checkSuperAdmin: ({ id }: DoorLockUser) => boolean;
+    checkSuperAdmin: ({ userId }: DoorLockUser) => boolean;
     logAbilityEvaluation: ({ userId, wasAllowed, resourceName, resourceIdentifier, reason, }: DoorLockLogOptions) => void;
     verifyEntityExistence: <T extends DoorLockEntity>({ userId, entityHandles, entityIds, entityName, resourceName, resourceIdentifier, fetchByIdsFn, fetchByHandlesFn, }: {
-        userId: DoorLockUser['id'];
-        entityIds: DoorLockEntity['id'][];
+        userId: DoorLockUser['userId'];
+        entityIds: DoorLockEntity['entityId'][];
         entityHandles: DoorLockEntity['handle'][];
         entityName: string;
         resourceName?: string | undefined;
         resourceIdentifier?: string | undefined;
-        fetchByIdsFn: (entityIds: DoorLockEntity['id'][]) => Promise<T[]>;
+        fetchByIdsFn: (entityIds: DoorLockEntity['entityId'][]) => Promise<T[]>;
         fetchByHandlesFn: (entityHandles: DoorLockEntity['handle'][]) => Promise<T[]>;
     }) => Promise<{
         userEntities: T[];

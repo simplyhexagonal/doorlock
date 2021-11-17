@@ -1,5 +1,5 @@
 export interface DoorLockEntity {
-    id: string;
+    entityId: string;
     name: string;
     handle: string;
     description: string;
@@ -10,8 +10,8 @@ export interface DoorLockPermission extends DoorLockEntity {
 export interface DoorLockRestriction extends DoorLockEntity {
 }
 export interface DoorLockAbilities {
-    permissions: DoorLockPermission['id'][];
-    restrictions: DoorLockRestriction['id'][];
+    permissions: DoorLockPermission['entityId'][];
+    restrictions: DoorLockRestriction['entityId'][];
 }
 export interface DoorLockAbilityDescriptions {
     permissions: DoorLockPermission['description'][];
@@ -21,16 +21,16 @@ export interface DoorLockRole extends DoorLockEntity {
     abilities: DoorLockAbilities;
 }
 export interface DoorLockUser {
-    id: string;
-    roles: DoorLockRole['id'][];
+    userId: string;
+    roles: DoorLockRole['entityId'][];
     abilities: DoorLockAbilities;
     [key: string]: any;
 }
 export interface DoorLockOptions {
-    superAdminId: DoorLockUser['id'];
-    fetchRolesById: (roleIds: DoorLockRole['id'][]) => Promise<DoorLockRole[]>;
-    fetchPermissionsById: (permissionIds: DoorLockPermission['id'][]) => Promise<DoorLockPermission[]>;
-    fetchRestrictionsById: (restrictionIds: DoorLockRestriction['id'][]) => Promise<DoorLockRestriction[]>;
+    superAdminId: DoorLockUser['userId'];
+    fetchRolesById: (roleIds: DoorLockRole['entityId'][]) => Promise<DoorLockRole[]>;
+    fetchPermissionsById: (permissionIds: DoorLockPermission['entityId'][]) => Promise<DoorLockPermission[]>;
+    fetchRestrictionsById: (restrictionIds: DoorLockRestriction['entityId'][]) => Promise<DoorLockRestriction[]>;
     fetchRolesByHandle: (roleHandles: DoorLockRole['handle'][]) => Promise<DoorLockRole[]>;
     fetchPermissionsByHandle: (permissionHandles: DoorLockPermission['handle'][]) => Promise<DoorLockPermission[]>;
     fetchRestrictionsByHandle: (restrictionHandles: DoorLockRestriction['handle'][]) => Promise<DoorLockRestriction[]>;

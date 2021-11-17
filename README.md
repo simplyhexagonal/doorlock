@@ -84,7 +84,7 @@ From the previous, the following is assumed in regards to your user and access r
 ```ts
 // Permissions will be stored with a structure containing at least the following properties:
 {
-  id: string,
+  entityId: string,
   name: string,
   handle: string,
   description: string
@@ -92,7 +92,7 @@ From the previous, the following is assumed in regards to your user and access r
 
 // Restrictions will be stored with a structure containing at least the following properties:
 {
-  id: string,
+  entityId: string,
   name: string,
   handle: string,
   description: string
@@ -100,7 +100,7 @@ From the previous, the following is assumed in regards to your user and access r
 
 // Roles will be stored with a structure containing at least the following properties:
 {
-  id: string,
+  entityId: string,
   name: string,
   handle: string,
   description: string,
@@ -112,7 +112,7 @@ From the previous, the following is assumed in regards to your user and access r
 
 // User will be stored with a structure containing at least the following properties:
 {
-  id: string,
+  userId: string,
   roles: RoleId[],
   abilities: {
     permissions: PermissionId[],
