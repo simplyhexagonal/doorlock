@@ -2,7 +2,7 @@ import { DoorLockRole, } from '../dist/doorlock';
 
 const roles: DoorLockRole[] = [
   {
-    id: '7asPS1',
+    entityId: '7asPS1',
     name: 'Admin',
     handle: 'admin',
     description: 'Administrator access',
@@ -18,7 +18,7 @@ const roles: DoorLockRole[] = [
     },
   },
   {
-    id: 'iukS74',
+    entityId: 'iukS74',
     name: 'Author',
     handle: 'author',
     description: 'Author access',
@@ -33,7 +33,7 @@ const roles: DoorLockRole[] = [
     },
   },
   {
-    id: 'R94YYO',
+    entityId: 'R94YYO',
     name: 'Diva Author',
     handle: 'diva-author',
     description: 'Author access for hot-headed authors',
@@ -50,7 +50,7 @@ const roles: DoorLockRole[] = [
     },
   },
   {
-    id: 'fpmYTG',
+    entityId: 'fpmYTG',
     name: 'Editor',
     handle: 'editor',
     description: 'Editor access',
@@ -63,7 +63,7 @@ const roles: DoorLockRole[] = [
     },
   },
   {
-    id: 'sl4dJP',
+    entityId: 'sl4dJP',
     name: 'Viewer',
     handle: 'viewer',
     description: 'Viewer access',

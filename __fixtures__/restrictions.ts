@@ -2,13 +2,13 @@ import { DoorLockRestriction, } from '../dist/doorlock';
 
 const restrictions: DoorLockRestriction[] = [
   {
-    id: 'xj5bDL',
+    entityId: 'xj5bDL',
     name: 'Block Delete Doc',
     handle: 'deny-doc-delete',
     description: 'deny access to delete a document',
   },
   {
-    id: 'v4chur',
+    entityId: 'v4chur',
     name: 'Dummy Restriction',
     handle: 'deny-dummy',
     description: 'because, why not?',

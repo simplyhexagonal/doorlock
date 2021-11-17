@@ -2,31 +2,31 @@ import { DoorLockPermission, } from '../dist/doorlock';
 
 const permissions: DoorLockPermission[] = [
   {
-    id: 'e6crPQ',
+    entityId: 'e6crPQ',
     name: 'Handle Access',
     handle: 'permission',
     description: 'permission to view and edit permissions'
   },
   {
-    id: 'OK00eo',
+    entityId: 'OK00eo',
     name: 'Create Doc',
     handle: 'doc-create',
     description: 'permission to create a document',
   },
   {
-    id: 'kvK4B3',
+    entityId: 'kvK4B3',
     name: 'Read Doc',
     handle: 'doc-read',
     description: 'permission to view a document',
   },
   {
-    id: 'Sl5ile',
+    entityId: 'Sl5ile',
     name: 'Update Doc',
     handle: 'doc-update',
     description: 'permission to edit a document',
   },
   {
-    id: 'Tj0rxW',
+    entityId: 'Tj0rxW',
     name: 'Delete Doc',
     handle: 'doc-delete',
     description: 'permission to delete a document',

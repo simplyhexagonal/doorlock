@@ -10,7 +10,7 @@ interface TestUser extends DoorLockUser {
 const users: TestUser[] = [
   // User with no access
   {
-    id: 'YhjGOX',
+    userId: 'YhjGOX',
     roles: [],
     abilities: {
       permissions: [],
@@ -31,7 +31,7 @@ const users: TestUser[] = [
   },
   // Super Admin
   {
-    id: 'B0O8fG',
+    userId: 'B0O8fG',
     roles: [],
     abilities: {
       permissions: [],
@@ -52,7 +52,7 @@ const users: TestUser[] = [
   },
   // Admin
   {
-    id: 'gVilJi',
+    userId: 'gVilJi',
     roles: [
       '7asPS1',
     ],
@@ -76,7 +76,7 @@ const users: TestUser[] = [
   },
   // Author
   {
-    id: 'IHpwes',
+    userId: 'IHpwes',
     roles: [
       'iukS74',
     ],
@@ -101,7 +101,7 @@ const users: TestUser[] = [
   // Diva Author
   // (i.e. These authors are hot headed and known for deleting good progress)
   {
-    id: '643ANo',
+    userId: '643ANo',
     roles: [
       'R94YYO',
     ],
@@ -125,7 +125,7 @@ const users: TestUser[] = [
   },
   // Diva Author with a temporary override
   {
-    id: 'DW4SXI',
+    userId: 'DW4SXI',
     roles: [
       'R94YYO',
     ],
@@ -154,7 +154,7 @@ const users: TestUser[] = [
   // we need to avoid accidental deletion of their genius,
   // thus we added a restriction override)
   {
-    id: 'qoKPjo',
+    userId: 'qoKPjo',
     roles: [
       'iukS74',
     ],
@@ -181,7 +181,7 @@ const users: TestUser[] = [
   // Author f-up
   // (i.e. someone messed up and assigned this user both normal and diva author roles)
   {
-    id: 'rTx7Wk',
+    userId: 'rTx7Wk',
     roles: [
       'iukS74',
       'R94YYO',
@@ -206,7 +206,7 @@ const users: TestUser[] = [
   },
   // Editor
   {
-    id: 'lMg1sI',
+    userId: 'lMg1sI',
     roles: [
       'fpmYTG',
     ],
@@ -230,7 +230,7 @@ const users: TestUser[] = [
   },
   // Trusted Editor
   {
-    id: 'lMg1sI',
+    userId: 'lMg1sI',
     roles: [
       'fpmYTG',
     ],
@@ -256,7 +256,7 @@ const users: TestUser[] = [
   },
   // Viewer
   {
-    id: 'TAcDSA',
+    userId: 'TAcDSA',
     roles: [
       'sl4dJP',
     ],
@@ -280,7 +280,7 @@ const users: TestUser[] = [
   },
   // Valued Author changed to Viewer
   {
-    id: 'oR0k4c',
+    userId: 'oR0k4c',
     roles: [
       'sl4dJP',
     ],
@@ -306,7 +306,7 @@ const users: TestUser[] = [
   },
   // User with no role, two permissions, and one "conflicting" restriction
   {
-    id: 'Ch4Ot2',
+    userId: 'Ch4Ot2',
     roles: [],
     abilities: {
       permissions: [
@@ -333,7 +333,7 @@ const users: TestUser[] = [
   },
   // User with no role, a single permissions "conflicting" with a single restriction
   {
-    id: 'tFUCpA',
+    userId: 'tFUCpA',
     roles: [],
     abilities: {
       permissions: [
@@ -358,7 +358,7 @@ const users: TestUser[] = [
   },
   // User with no role, one permissions, and two restriction (one of which "conflicts" with the permission)
   {
-    id: 'lDiwbP',
+    userId: 'lDiwbP',
     roles: [],
     abilities: {
       permissions: [

@@ -5,7 +5,7 @@ import DoorLock, {
   DoorLockRestriction,
   DoorLockRole,
   DoorLockUser,
-} from '../dist/doorlock';
+} from '../src';
 
 import permissions from '../__fixtures__/permissions';
 import restrictions from '../__fixtures__/restrictions';
@@ -14,9 +14,9 @@ import users from '../__fixtures__/users';
 
 const logger = new Logger({});
 
-const fetchRolesById = async (roleIds: DoorLockRole['id'][]) => (await roles()).filter((r) => roleIds.includes(r.id));
-const fetchPermissionsById = async (permissionIds: DoorLockPermission['id'][]) => (await permissions()).filter((p) => permissionIds.includes(p.id));
-const fetchRestrictionsById = async (restrictionIds: DoorLockRestriction['id'][]) => (await restrictions()).filter((r) => restrictionIds.includes(r.id));
+const fetchRolesById = async (roleIds: DoorLockRole['entityId'][]) => (await roles()).filter((r) => roleIds.includes(r.entityId));
+const fetchPermissionsById = async (permissionIds: DoorLockPermission['entityId'][]) => (await permissions()).filter((p) => permissionIds.includes(p.entityId));
+const fetchRestrictionsById = async (restrictionIds: DoorLockRestriction['entityId'][]) => (await restrictions()).filter((r) => restrictionIds.includes(r.entityId));
 const fetchRolesByHandle = async (roleHandles: DoorLockRole['handle'][]) => (await roles()).filter((r) => roleHandles.includes(r.handle));
 const fetchPermissionsByHandle = async (permissionHandles: DoorLockPermission['handle'][]) => (await permissions()).filter((p) => permissionHandles.includes(p.handle));
 const fetchRestrictionsByHandle = async (restrictionHandles: DoorLockRestriction['handle'][]) => (await restrictions()).filter((r) => restrictionHandles.includes(r.handle));
@@ -129,11 +129,11 @@ const performRequest = async (user: DoorLockUser, route: string) => {
     user,
   };
 
-  console.log(`Testing user ${user.id} against route: ${route}`);
+  console.log(`Testing user ${user.userId} against route: ${route}`);
 
   const response = {
     send: (responseMessage: string) => {
-      console.log(`${route} (${user.id}):`,responseMessage);
+      console.log(`${route} (${user.userId}):`,responseMessage);
     },
   };
 
@@ -144,37 +144,39 @@ const routes = Object.keys(routeMap);
 
 describe('DoorLock', () => {
   it('works', async () => {
-    await Promise.all(
-      routes.map((route) => {
-        return Promise.all(
-          users.map((user) => {
-            const allExpectations = [
-              ...user.pathExpectations.fail,
-              ...user.pathExpectations.pass,
-            ];
+    await routes.reduce(async (a, route) => {
+      await a;
 
-            expect(allExpectations.sort().join()).toBe(routes.sort().join());
+      return users.reduce(async (a, user) => {
+        await a;
 
-            return (async () => {
-              const result = await performRequest(
-                user,
-                route,
-              ).then(() => true).catch((e) => {
-                // Only uncomment if all else fails
-                // console.log(e);
+        const allExpectations = [
+          ...user.pathExpectations.fail,
+          ...user.pathExpectations.pass,
+        ];
 
-                return false;
-              });
+        expect(allExpectations.sort().join()).toBe(routes.sort().join());
 
-              if (user.pathExpectations.fail.includes(route)) {
-                expect(!result).toBe(true);
-              } else {
-                expect(result).toBe(true);
-              }
-            })();
-          })
-        );
-      })
-    );
+        return (async () => {
+          const result = await performRequest(
+            user,
+            route,
+          ).then(() => true).catch((e) => {
+            // Only uncomment if all else fails
+            // console.log(e);
+
+            return false;
+          });
+
+          if (user.pathExpectations.fail.includes(route)) {
+            console.log(route, 'should fail', result);
+            expect(!result).toBe(true);
+          } else {
+            console.log(route, 'should succeed', result);
+            expect(result).toBe(true);
+          }
+        })();
+      }, Promise.resolve());
+    }, Promise.resolve())
   });
 });
